@@ -3,7 +3,7 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 client = MongoClient("mongodb+srv://dummy:1234@cluster0.lgtpggt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-db = client.todo_db
+db = client.test
 collection = db.todo_items
 
 @app.route("/submittodoitem", methods=["POST"])
