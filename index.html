@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flask To-Do App</title>
-
 </head>
 <body>
     <h2>Add a Task</h2>
@@ -15,19 +14,34 @@
     </form>
 
     <script>
-        document.getElementById('todoForm').onsubmit = async function(event) {
-            event.preventDefault();
-            const response = await fetch('/api/submit', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    name: document.getElementById('itemName').value,
-                    description: document.getElementById('itemDescription').value
-                })
-            });
-            const result = await response.json();
-            alert(result.message);
-        };
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('todoForm').onsubmit = async function(event) {
+                event.preventDefault();
+    
+                const requestData = {
+                    itemName: document.getElementById('itemName').value,
+                    itemDescription: document.getElementById('itemDescription').value
+                };
+    
+                console.log("📤 Sending Data:", requestData);  // Debugging: Check if data is sent
+    
+                try {
+                    const response = await fetch('http://127.0.0.1:5000/api/submit', {  // FIXED URL
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(requestData)
+                    });
+    
+                    const result = await response.json();
+                    console.log("📩 Received Response:", result);  // Debugging: Check Flask response
+                    alert(result.message || result.error);
+                } catch (error) {
+                    console.error("❌ Fetch Error:", error);
+                }
+            };
+        });
     </script>
+    
+    
 </body>
 </html>
