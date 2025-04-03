@@ -8,15 +8,14 @@ CORS(app)
 
 # Connect to MongoDB
 client = MongoClient("mongodb+srv://dummy:1234@cluster0.lgtpggt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-db = client.todo_database  # Database name
-collection = db.todo_items  # Collection name
+db = client.todo_database  
+collection = db.todo_items  
 
-# Serve the frontend (HTML, CSS, JS)
 @app.route('/')
 def serve_frontend():
     return send_from_directory('frontend', 'index.html')
 
-# API Route for Submitting Data
+
 @app.route('/api/submit', methods=['POST'])
 def submit():
     try:
