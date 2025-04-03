@@ -3,45 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Submission</title>
+    <title>Flask To-Do App</title>
 </head>
 <body>
-    <h1>Welcome to the page2521532</h1>
-    <h2>Submit Your Details2521532</h2>
-    <h1>Welcome to the page2521532</h1>
-    <h2>Submit Your Details 2521532</h2>
+    <h1>Welcome to the page</h1>
+    <h2>Submit Your Details</h2>
     <form id="form">
         <input type="text" id="name" name="name" placeholder="Name" required>
+
         <input type="email" id="email" name="email" placeholder="Email" required>
+
+        <input type="text" name="item_id" placeholder="Item ID">
+
         <button type="submit">Submit</button>
     </form>
-    <p id="message"></p>
-    
-    <script>
-        document.getElementById("form").addEventListener("submit", async function(event) {
-            event.preventDefault();
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const message = document.getElementById("message");
 
-            try {
-                const response = await fetch("http://localhost:5000/api/submit", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name, email })
-                });
-                const result = await response.json();
-                if (response.ok) {
-                    window.location.href = "success.html";
-                } else {
-                    message.textContent = result.message;
-                    message.style.color = "red";
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('todoForm').onsubmit = async function(event) {
+                event.preventDefault();
+    
+                const requestData = {
+                    itemName: document.getElementById('itemName').value,
+                    itemDescription: document.getElementById('itemDescription').value
+                };
+    
+                console.log("📤 Sending Data:", requestData);  // Debugging: Check if data is sent
+    
+                try {
+                    const response = await fetch('http://127.0.0.1:5000/api/submit', {  // FIXED URL
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(requestData)
+                    });
+    
+                    const result = await response.json();
+                    console.log("📩 Received Response:", result);  // Debugging: Check Flask response
+                    alert(result.message || result.error);
+                } catch (error) {
+                    console.error("❌ Fetch Error:", error);
                 }
-            } catch (error) {
-                message.textContent = "An error occurred while submitting the form.";
-                message.style.color = "red";
-            }
+            };
         });
     </script>
+    
+    
 </body>
 </html>
