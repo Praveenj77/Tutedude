@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submission</title>
+</head>
+<body>
+    <h2>Submit Your Details</h2>
+    <form id="form">
+        <input type="text" id="name" name="name" placeholder="Name" required>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="message"></p>
+    
+    <script>
+        document.getElementById("form").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message");
+
+            try {
+                const response = await fetch("http://localhost:5000/api/submit", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    window.location.href = "success.html";
+                } else {
+                    message.textContent = result.message;
+                    message.style.color = "red";
+                }
+            } catch (error) {
+                message.textContent = "An error occurred while submitting the form.";
+                message.style.color = "red";
+            }
+        });
+    </script>
+</body>
+</html>

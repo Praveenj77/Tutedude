@@ -1,0 +1,20 @@
+{
+    "data": [
+        {
+            "name": "demo",
+            "email": "praveen@j.com"
+        },
+
+        {
+            "name": "demo1",
+            "email": "praveen@j.com"
+        },
+        
+        {
+            "name": "demo2",
+            "email": "praveen@j.com"
+        }
+        
+    ]
+    
+}
